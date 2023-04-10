@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  hr
+  if movies.length > 0
+    #movies-wrapper
+      ul.movies-list
+        each val in movies
+          li= val.text        

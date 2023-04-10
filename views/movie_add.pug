@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  p Use the form below to add a movie
+  hr
+  if msg
+    p(class='redText')= msg
+  form(method='POST', action="/movies/add")
+    input(type="text" name="movieTitle" class = "movieInput" placeholder = "Title")
+    | 
+    input(type="text" name="date" class = "movieInput" placeholder = "Date")
+    | 
+    textarea(name="synopsis" class="movieInput" placeholder= "Synopsis" cols="30", rows="6")
+    | 
+    //input(type="text" name="lastEdited" class = "contactInput" placeholder = "Last Edited")
+    button(class="btn")
+      | Submit
