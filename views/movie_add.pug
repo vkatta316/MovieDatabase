@@ -9,10 +9,12 @@ block content
   form(method='POST', action="/movies/add")
     input(type="text" name="movieTitle" class = "movieInput" placeholder = "Title")
     | 
-    input(type="text" name="date" class = "movieInput" placeholder = "Date")
+    input(type="number" name="year" class = "movieInput" placeholder = "Year")
     | 
     textarea(name="synopsis" class="movieInput" placeholder= "Synopsis" cols="30", rows="6")
     | 
     //input(type="text" name="lastEdited" class = "contactInput" placeholder = "Last Edited")
+    | 
+    input(type='file', name='userFiles', multiple)
     button(class="btn")
       | Submit

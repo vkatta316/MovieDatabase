@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  header(id="list-header")
+    h1= title
+  #movies-wrapper
+    ul.movies-list
+      li= `Movie Title : ${movie.title}`
+     

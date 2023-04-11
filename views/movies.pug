@@ -8,4 +8,12 @@ block content
     #movies-wrapper
       ul.movies-list
         each val in movies
-          li= val.text        
+          tbody
+            tr
+              td
+                a(class = "viewMovie" href=`/movies/${val.id}`)= val.title
+                | 
+                td= val.year
+                | 
+                td
+                 
