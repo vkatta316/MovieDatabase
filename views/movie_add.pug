@@ -1,20 +1,25 @@
 extends layout
 
 block content
-  h1= title
-  p Use the form below to add a movie
+  header(id="list-header")
+    h1 Add a Movie 
+    p Use the form below to add a movie
   hr
   if msg
     p(class='redText')= msg
-  form(method='POST', action="/movies/add")
-    input(type="text" name="movieTitle" class = "movieInput" placeholder = "Title")
-    | 
-    input(type="number" name="year" class = "movieInput" placeholder = "Year")
-    | 
-    textarea(name="synopsis" class="movieInput" placeholder= "Synopsis" cols="30", rows="6")
-    | 
-    //input(type="text" name="lastEdited" class = "contactInput" placeholder = "Last Edited")
-    | 
-    input(type='file', name='userFiles', multiple)
-    button(class="btn")
-      | Submit
+  div(class='wrapper wrapper--w780')
+    div(class='card card-3')
+      .card-heading 
+      .card-body 
+        form(method='POST' action="/movies/add" enctype="multipart/form-data")
+          .input-group 
+            input(type='text', name='movieTitle',class = "input-style", value='', placeholder = "Title")
+          .input-group 
+            input(type="number" name="year" class = "input-style" placeholder = "Year")
+          .input-group 
+            textarea(name="synopsis" class = "input-style" placeholder= "Synopsis" cols="30", rows="6")
+          .input-group 
+            input(type='file', class = "input-style" name='userFiles', multiple)
+          div.p-t-10
+            button(class="btn btn--pill btn--green") Submit
+      

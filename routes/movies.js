@@ -21,5 +21,18 @@ router.post('/add', upload.array('userFiles'), moviesController.movies_create_po
 /* GET Single Movie Info. */
 router.get('/:uuid', moviesController.movies_details_get);
 
+/* Delete Movie. */
+router.get('/:uuid/delete', moviesController.movies_delete_get);
+
+/* Confirm Delete Movie. */
+router.post('/:uuid/delete', moviesController.movies_delete_post);
+
+/* Edit Movie page. */
+router.get('/:uuid/edit', moviesController.movies_edit_get);
+
+/* POST Edit Movie page. */
+router.post('/:uuid/edit',
+  moviesController.movies_edit_post);
+
 
 module.exports = router;

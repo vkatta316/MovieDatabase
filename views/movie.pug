@@ -4,6 +4,12 @@ block content
   header(id="list-header")
     h1= title
   #movies-wrapper
-    ul.movies-list
-      li= `Movie Title : ${movie.title}`
+    .movie
+      img.img-rounded.logo(src=`${movie.ImageURL}`)
+    .movie-info
+      a(class = "movie-info" href=`/movies/${movie.id}`)= movie.title
+      | 
+      h3= movie.year
+      | 
+      h3= movie.synopsis
      

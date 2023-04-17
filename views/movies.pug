@@ -1,19 +1,21 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  hr
-  if movies.length > 0
-    #movies-wrapper
-      ul.movies-list
-        each val in movies
-          tbody
-            tr
-              td
-                a(class = "viewMovie" href=`/movies/${val.id}`)= val.title
+  header(id="list-header")
+    h1= title
+    a( id = "movie-form-send" href="/movies/add") Add a Movie
+  .content 
+    if movies.length > 0
+      #movies-wrapper
+        .movies-list
+          each val in movies
+            .movie
+              a(class = "movie-info" href=`/movies/${val.id}`)
+                img.img-rounded.logo(src=`${val.ImageURL}`)
+              .movie-info
+                h3= val.title
                 | 
-                td= val.year
-                | 
-                td
+                h3= val.year
+              .overview 
+                h3= val.synopsis
                  

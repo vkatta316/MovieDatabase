@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  header(id="list-header")
+    h1= heading
+  p.deleteWarning Are you sure you want to delete the following Movie ?
+  if movie.length> 0
+  #movie-wrapper 
+    .movie
+      img.img-rounded.logo(src=`${movie.ImageURL}`)
+    .movie-info
+      a(class = "movie-info" href=`/movies/${movie.id}`)= movie.title
+      | 
+      h3= movie.year
+      | 
+      h3= movie.synopsis
+  form(class="deleteContact" method="POST" action=`/movies/${movie.id}/delete`)
+    button(class="btn")
+      | Confirm Delete
+      | 
+    a(class= "cancelMovie" href=`/movies/${movie.id}`) Cancel

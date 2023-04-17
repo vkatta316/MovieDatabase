@@ -13,7 +13,9 @@ let movieSchema = new mongoose.Schema({
      synopsis: {
         type: String
     },
-    ImageURL: String,
+    ImageURL:  {
+      type: String
+  },
     Featured: Boolean
   });
   
