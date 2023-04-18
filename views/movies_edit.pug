@@ -13,20 +13,25 @@ block content
         div(class="navbar-nav")
           a(class="nav-link active" aria-current="page" href="/movies") Home
           a(class="nav-link" href="/movies/add")= action
-          a(class="nav-link" href=`/movies/${movie.id}/edit`)= editAction
-          a(class="nav-link" href=`/movies/${movie.id}/delete`)= deleteAction
       form(class="d-flex" action="/logout" method="post") 
         button(class="nav navbar-nav navbar-right" id='sign-out' type="submit") Sign out 
   header(id="list-header")
     h1= title
-  #movies-wrapper
-    .movie
-      img.img-rounded.logo(src=`${movie.ImageURL}`)
-    .movie-info
-      a(class = "movie-info" href=`/movies/${movie.id}`)= movie.title
-      | 
-      h3= movie.year
-      | 
-      h3= movie.synopsis
-  
-     
+  hr
+  if msg 
+    p(class='redtext')= msg
+  div(class='wrapper wrapper--w780')
+    div(class='card card-3')
+      .card-heading 
+      .card-body 
+        form(method='POST' action=`/movies/${movie.id}/edit`)
+          .input-group
+            input(type='text' class = 'input-style' name='movieTitle' value=movie.title) 
+          .input-group
+            input(type='number' class = 'input-style' name='year' value=movie.year) 
+          .input-group
+            input(type='text' class = 'input-style' name='synopsis' value=movie.synopsis) 
+          div.p-t-10
+            button(type='submit' class='btn btn--pill btn--green') Save 
+            a(href='/movies') 
+              button(class='btn btn--pill btn--green') Cancel

@@ -13,11 +13,11 @@ block content
       .card-body 
         form(method='POST' action=`/movies/${movie.id}/edit` enctype="multipart/form-data")
           .input-group 
-            input(type="text" name="movieTitle" class = "input-style" placeholder = "Title"  value= movie.title)
+            input(type="text" name="movieTitle" class = "input-style" placeholder = "Title"  value=movie.title)
           .input-group 
-            input(type='number' name='year' class = "input-style" placeholder = "Year" value= movie.year )
+            input(type='number' name='year' class = "input-style" placeholder = "Year" value=movie.year )
           .input-group 
             textarea(name="synopsis" class = "input-style" placeholder= "Synopsis" cols="30", rows="6" )= movie.synopsis
           div.p-t-10
-            button(class="btn btn--pill btn--green") Save Changes
+            button(class="btn btn--pill btn--green" type='submit') Save Changes
       

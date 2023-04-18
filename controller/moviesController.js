@@ -11,7 +11,7 @@ const MovieModel = require('../models/movies');
 exports.movies_list = async function(req, res, next) {
     const movies = await MovieModel.find();
     console.log("MONGO  DB " + movies);
-    res.render('movies', {title: 'Movie Database', movies: movies});
+    res.render('movies', {title: 'Movie Database', action: 'Add A Movie', movies: movies});
   };
 
  /* GET Movie page. */
@@ -66,7 +66,7 @@ exports.movies_details_get = async function(req, res, next) {
   const movieInfo = await MovieModel.findById(req.params.uuid).exec();
   if(movieInfo){
     console.log("Movie Info" +movieInfo)
-    res.render('movie', { title: 'View Movie Details', movie: movieInfo});
+    res.render('movie', { title: 'View Movie Details', editAction: 'Edit A Movie', deleteAction: 'Delete', movie: movieInfo});
   }else{
     res.redirect('/movies')
   }
@@ -86,39 +86,28 @@ exports.movies_delete_post =  async function(req, res, next) {
 };
 
  
-  /* Edit Movie page. */
-  exports.movies_edit_get =  async function(req, res, next) {
-    const movieInfo = await MovieModel.findById(req.params.uuid).exec();
-    console.log('Edit Movie page' + movieInfo);
-    res.render('movie_edit', { heading: 'Edit a Movie' , movie: movieInfo });
-  };
-  
-  /* POST Edit Movie page. */
-  exports.movies_edit_post = 
-  async function(req, res, next) {
-    const result = validationResult(req)
-    if(!result.isEmpty()){
-      const movieInfo = await MovieModel.findById(req.params.uuid).exec();
-      res.render('movie_edit' , {heading : 'Edit a Movie' , msg : result.array() , movie: movieInfo});
-    }
-    else{
+  /* GET edit todo form. */
+exports.todos_edit_get = async function(req, res, next) {
+  // const todo = await todosRepo.findById(req.params.uuid);
+  const movieInfo = await MovieModel.findById(req.params.uuid).exec();
+  res.render('movies_edit', { title: 'Edit Movie', movie: movieInfo });
+};
 
-
-    const filter = { name: 'Pulp Fiction'};
-
-    
-    const update = { year: 2005 };
-
-    
-
-    // `doc` is the document _before_ `update` was applied
-    let doc = await MovieModel.findOneAndUpdate(filter, update,  {
-      new: true
-    });
-    
-    
-    
-      console.log("reult" +doc)
-      res.redirect(`/movies/${req.params.uuid}`);
-    }
+/* POST edit todo. */
+exports.todos_edit_post = async function(req, res, next) {
+  console.log(req.body);
+  if (req.body.movieTitle.trim() === '') {
+    // const todo = await todosRepo.findById(req.params.uuid);
+    const todo = await MovieModel.findById(req.params.uuid).exec();
+    console.log("VKatta AA"+ todo);
+    res.render('movies_edit', 
+      { title: 'Edit Todo', msg: 'Todo text can not be empty!', movie: todo }
+    );
+  } else {
+    // const updatedTodo = new Todo(req.params.uuid, req.body.todoText.trim());
+    // await todosRepo.update(updatedTodo);
+    console.log("req.body.title" +req.body.movieTitle);
+    await MovieModel.findByIdAndUpdate(req.params.uuid, {title: req.body.movieTitle, year: req.body.year, synopsis: req.body.synopsis });
+    res.redirect(`/movies/${req.params.uuid}`);
+  }
 };

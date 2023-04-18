@@ -1,21 +1,34 @@
 extends layout
 
 block content
+  nav(class="navbar navbar-expand-lg navbar-dark")
+    .container-fluid
+      a(class="navbar-brand" href="#")
+      button(class="navbar-toggler" type="button" 
+          data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" 
+          aria-label="Toggle navigation")
+        span(class="navbar-toggler-icon")
+      div(class="collapse navbar-collapse" id="navbarNavAltMarkup")
+        div(class="navbar-nav")
+          a(class="nav-link active" aria-current="page" href="/movies") Home
+      form(class="d-flex" action="/logout" method="post") 
+        button(class="nav navbar-nav navbar-right" id='sign-out' type="submit") Sign out 
   header(id="list-header")
     h1= heading
   p.deleteWarning Are you sure you want to delete the following Movie ?
-  if movie.length> 0
-  #movie-wrapper 
-    .movie
-      img.img-rounded.logo(src=`${movie.ImageURL}`)
-    .movie-info
-      a(class = "movie-info" href=`/movies/${movie.id}`)= movie.title
-      | 
-      h3= movie.year
-      | 
-      h3= movie.synopsis
-  form(class="deleteContact" method="POST" action=`/movies/${movie.id}/delete`)
-    button(class="btn")
-      | Confirm Delete
-      | 
-    a(class= "cancelMovie" href=`/movies/${movie.id}`) Cancel
+    #movies-wrapper 
+      .movie
+        img.img-rounded.logo(src=`${movie.ImageURL}`)
+      .movie-info
+        a(class = "movie-info" href=`/movies/${movie.id}`)= movie.title
+        | 
+        h3= movie.year
+        | 
+        h3= movie.synopsis
+    form(class="deleteContact" method="POST" action=`/movies/${movie.id}/delete`)
+      div.p-t-10
+        button(type='submit' class='btn btn--pill btn--green') Confirm Delete
+    div.p-t-10
+      a(href=`/movies/${movie.id}`) 
+        button(class='btn btn--pill btn--green') Cancel

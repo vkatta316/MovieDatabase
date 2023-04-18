@@ -27,12 +27,21 @@ router.get('/:uuid/delete', moviesController.movies_delete_get);
 /* Confirm Delete Movie. */
 router.post('/:uuid/delete', moviesController.movies_delete_post);
 
-/* Edit Movie page. */
-router.get('/:uuid/edit', moviesController.movies_edit_get);
+/* GET edit todo form. */
+router.get('/:uuid/edit', moviesController.todos_edit_get);
 
-/* POST Edit Movie page. */
-router.post('/:uuid/edit',
-  moviesController.movies_edit_post);
+/* POST edit todo. */
+router.post('/:uuid/edit', moviesController.todos_edit_post);
 
+/* GET users listing. */
+router.get('/movies', function(req, res, next) {
+    if (req.isAuthenticated()) {
+      console.log(req.session);
+      console.log(req.authInfo);
+      res.render('movies', { title: 'User Info', user: JSON.stringify(req.session.passport.user, null, 2) });
+    } else {
+      res.redirect('/login');
+    }
+  });
 
 module.exports = router;

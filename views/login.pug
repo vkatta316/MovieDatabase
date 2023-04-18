@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .form-signin 
+  form(action="/login/password", method="POST")
+    .form-group  
+      h2 Please Sign In
+    .form-group  
+      input(class="form-control" id="email" name="email"  type= "email" placeholder="Email address" minlength="5" maxlength="255" autofocus)
+    .form-group  
+      input(class="form-control" id="emailPassword" name="password" type="password" placeholder="Password" maxlength="255")
+    .form-group  
+      button(type="submit" class="btn btn-primary") Sign In
+  .form-group  
+    a(href="/signup") 
+      button(class='btn btn--pill btn--green') Sign Up 
+    a(href="/login/federated/google") 
+      button(class='btn btn--pill btn--green') SignIn with Google

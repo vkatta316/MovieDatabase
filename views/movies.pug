@@ -1,9 +1,22 @@
 extends layout
 
 block content
+  nav(class="navbar navbar-expand-lg navbar-dark")
+    .container-fluid
+      a(class="navbar-brand" href="#")
+      button(class="navbar-toggler" type="button" 
+          data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" 
+          aria-label="Toggle navigation")
+        span(class="navbar-toggler-icon")
+      div(class="collapse navbar-collapse" id="navbarNavAltMarkup")
+        div(class="navbar-nav")
+          a(class="nav-link active" aria-current="page" href="/movies") Home
+          a(class="nav-link" href="/movies/add")= action
+      form(class="d-flex" action="/logout" method="post") 
+        button(class="nav navbar-nav navbar-right" id='sign-out' type="submit") Sign out   
   header(id="list-header")
     h1= title
-    a( id = "movie-form-send" href="/movies/add") Add a Movie
   .content 
     if movies.length > 0
       #movies-wrapper
