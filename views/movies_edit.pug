@@ -30,7 +30,9 @@ block content
           .input-group
             input(type='number' class = 'input-style' name='year' value=movie.year) 
           .input-group
-            input(type='text' class = 'input-style' name='synopsis' value=movie.synopsis) 
+            textarea(name="synopsis" class = "input-style" placeholder= "Synopsis" cols="30", rows="6")= movie.synopsis
+          .input-group 
+            input(type="number" class = "input-style" name="rating"  value=movie.rating) 
           div.p-t-10
             button(type='submit' class='btn btn--pill btn--green') Save 
             a(href='/movies') 

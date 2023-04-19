@@ -12,7 +12,8 @@ let userSchema = new mongoose.Schema({
       },
       password: {
         type: String
-      }
+      },
+      refreshToken: String,
 
 });
 

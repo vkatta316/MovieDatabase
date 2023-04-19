@@ -3,7 +3,7 @@ extends layout
 block content
   nav(class="navbar navbar-expand-lg navbar-dark")
     .container-fluid
-      a(class="navbar-brand" href="#")
+      a(class="navbar-brand" href="#")= `Welcome ${user}`
       button(class="navbar-toggler" type="button" 
           data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" 
           aria-controls="navbarNavAltMarkup" aria-expanded="false" 
@@ -14,7 +14,10 @@ block content
           a(class="nav-link active" aria-current="page" href="/movies") Home
           a(class="nav-link" href="/movies/add")= action
       form(class="d-flex" action="/logout" method="post") 
-        button(class="nav navbar-nav navbar-right" id='sign-out' type="submit") Sign out   
+        if(!user)
+          a(class="nav-link active" aria-current="page" href="/login") Login 
+        else
+          button(class="nav navbar-nav navbar-right" id='sign-out' type="submit") Sign out   
   header(id="list-header")
     h1= title
   .content 
@@ -30,5 +33,5 @@ block content
                 | 
                 h3= val.year
               .overview 
-                h3= val.synopsis
+                h3= `Rating ${val.rating}`
                  

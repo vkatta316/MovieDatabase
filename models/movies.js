@@ -13,6 +13,9 @@ let movieSchema = new mongoose.Schema({
      synopsis: {
         type: String
     },
+    rating: {
+      type: Number
+    },
     ImageURL:  {
       type: String
   },

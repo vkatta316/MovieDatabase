@@ -9,9 +9,16 @@ const MovieModel = require('../models/movies');
 
 /* GET home page. */
 exports.movies_list = async function(req, res, next) {
+  if (req.isAuthenticated()) {
+    console.log(req.session);
+    console.log(req.authInfo);
+    console.log("Passport User On Movies" +JSON.stringify(req.session.passport.user.name, null, 2));
     const movies = await MovieModel.find();
     console.log("MONGO  DB " + movies);
-    res.render('movies', {title: 'Movie Database', action: 'Add A Movie', movies: movies});
+    res.render('movies', {title: 'Movie Database', action: 'Add A Movie', user: req.user.name, movies: movies});
+  } else {
+    res.redirect('/login');
+  }
   };
 
  /* GET Movie page. */
@@ -51,7 +58,7 @@ async function(req, res, next) {
      title: req.body.movieTitle,
      year: req.body.year,
      synopsis: req.body.synopsis,
-     
+     rating: req.body.rating,
      ImageURL: `/images/${originalFileName}`,
      Featured: true
    });
@@ -107,7 +114,7 @@ exports.todos_edit_post = async function(req, res, next) {
     // const updatedTodo = new Todo(req.params.uuid, req.body.todoText.trim());
     // await todosRepo.update(updatedTodo);
     console.log("req.body.title" +req.body.movieTitle);
-    await MovieModel.findByIdAndUpdate(req.params.uuid, {title: req.body.movieTitle, year: req.body.year, synopsis: req.body.synopsis });
+    await MovieModel.findByIdAndUpdate(req.params.uuid, {title: req.body.movieTitle, year: req.body.year, synopsis: req.body.synopsis , rating: req.body.rating});
     res.redirect(`/movies/${req.params.uuid}`);
   }
 };
