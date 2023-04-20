@@ -11,14 +11,13 @@ body {
   
 }
 
-
-
 .form-signin{
   height: 25vh;
 }
 
 #sign-out{
   color: #c3a6a6;
+  cursor: pointer;
 }
 
 .form-group{
@@ -117,7 +116,7 @@ div {
   flex-wrap: wrap;
 }
 
-.deleteWarning, div#movies-wrapper, .p-t-10{
+.deleteWarning, div#movies-wrapper, .p-t-10, .redText{
   display: flex;
   justify-content: center;
 }

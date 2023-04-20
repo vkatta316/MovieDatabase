@@ -14,6 +14,7 @@ let userSchema = new mongoose.Schema({
         type: String
       },
       refreshToken: String,
+      roles: ['admin' , 'user', 'editor']
 
 });
 

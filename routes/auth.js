@@ -4,7 +4,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var User = require('../models/users');
 var GoogleStrategy = require('passport-google-oidc');
-//var FederatedCredentials = require('../models/FederatedCredentials');
+var FederatedCredentials = require('../models/FederatedCredentials');
 const jwt = require('jsonwebtoken');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -40,6 +40,39 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 }, localAuthUser));
 
+
+async function googleAuthUser(issuer, profile, done) {
+  //return done(null, profile);
+  try {
+    const fedCred = await FederatedCredentials.findOne({provider: issuer, subject: profile.id});
+    if (!fedCred) {
+      // Create new user
+      const newUser = new User({
+        name: profile.displayName,
+        email: profile.emails[0].value,
+      });
+      const savedNewUser = await newUser.save();
+
+      console.log("SAVED USER" +savedNewUser);
+      // Create new federated credentials
+      const newFedCred = new FederatedCredentials({
+        provider: issuer,
+        subject: profile.id,
+        userid: savedNewUser.id,
+        name: savedNewUser.name,
+      });
+      const savedDoc = await newFedCred.save();
+      return done(null, savedNewUser);
+    } else {
+      const aUser = await User.findById(fedCred.userid);
+      return done(null, aUser);
+    }
+  } catch (error) {
+    console.log(error);
+    return done(error, false);
+  }
+}
+
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -69,7 +102,7 @@ passport.use('jwt', new JwtStrategy(jwt_opts, async function (jwt_payload, done)
 
 
 passport.serializeUser(function (user, done) {
-  done(null, user);
+  done(null, {id: user.id, roles: user.roles, name: user.name});
 });
 
 passport.deserializeUser(function (user, done) {
