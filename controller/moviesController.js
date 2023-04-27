@@ -49,8 +49,9 @@ exports.movies_create_post =
         fs.renameSync(`${f.path}`, `./public/images/${originalFileName}`);
       });
     }
-    if (req.body.movieTitle.trim() === '' || req.files.length === 0 || req.body.year === '') {
-      res.render('movie_add', { title: 'Movie Database', msg: 'Required Fields cannot be empty' });
+    const result = validationResult(req)
+    if (!result.isEmpty()) {
+      res.render('movie_add', { heading: 'Create a New Movie', msg: result.array() });
     } else {
       const newMovie = new MovieModel({
         title: req.body.movieTitle,
@@ -61,8 +62,8 @@ exports.movies_create_post =
         Featured: true
       });
       await newMovie.save();
+      res.redirect('/movies')
     };
-    res.redirect('/movies')
   };
 
 /* GET Single Movie. */
@@ -87,7 +88,7 @@ exports.movies_details_get = async function (req, res, next) {
 /* Delete Contact. */
 exports.movies_delete_get = async function (req, res, next) {
   const movieInfo = await MovieModel.findById(req.params.uuid).exec();
-  res.render('movie_delete', { heading: 'Delete a New Movie', movie: movieInfo });
+  res.render('movie_delete', { title: 'Delete a Movie', heading: 'Delete a New Movie', movie: movieInfo });
 };
 
 /* Confirm Delete Contact. */
@@ -98,25 +99,22 @@ exports.movies_delete_post = async function (req, res, next) {
 
 
 /* GET edit todo form. */
-exports.todos_edit_get = async function (req, res, next) {
+exports.movies_edit_get = async function (req, res, next) {
   // const todo = await todosRepo.findById(req.params.uuid);
   const movieInfo = await MovieModel.findById(req.params.uuid).exec();
   res.render('movies_edit', { title: 'Edit Movie', movie: movieInfo });
 };
 
 /* POST edit todo. */
-exports.todos_edit_post = async function (req, res, next) {
+exports.movies_edit_post = async function (req, res, next) {
   console.log(req.body);
-  if (req.body.movieTitle.trim() === '') {
-    // const todo = await todosRepo.findById(req.params.uuid);
-    const todo = await MovieModel.findById(req.params.uuid).exec();
-    console.log("VKatta AA" + todo);
-    res.render('movies_edit',
-      { title: 'Edit Todo', msg: 'Todo text can not be empty!', movie: todo }
-    );
+  const result = validationResult(req)
+  console.log('result VVV' + result);
+  if (!result.isEmpty()) {
+    console.log('result VVV[]' + result.array());
+    const movieInfo = await MovieModel.findById(req.params.uuid).exec();
+    res.render('movies_edit', { title: 'Edit Movie', msg: result.array(), movie: movieInfo });
   } else {
-    // const updatedTodo = new Todo(req.params.uuid, req.body.todoText.trim());
-    // await todosRepo.update(updatedTodo);
     console.log("req.body.title" + req.body.movieTitle);
     await MovieModel.findByIdAndUpdate(req.params.uuid, { title: req.body.movieTitle, year: req.body.year, synopsis: req.body.synopsis, rating: req.body.rating });
     res.redirect(`/movies/${req.params.uuid}`);

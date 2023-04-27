@@ -7,6 +7,7 @@ const upload = multer({dest: 'tmp/'});
 const MovieModel = require('../models/movies');
 
 const moviesController = require('../controller/moviesController.js');
+const { body } = require('express-validator');
 
 
 /* GET all Movies listing. */
@@ -16,7 +17,13 @@ router.get('/', moviesController.movies_list);
 router.get('/add', moviesController.movies_create_get);
 
 /* Render Data to Mongo*/
-router.post('/add', upload.array('userFiles'), moviesController.movies_create_post);
+router.post('/add', 
+body('movieTitle').trim().notEmpty().withMessage('Movie Title cannot be empty') ,
+body('year').trim().notEmpty().withMessage('Release cannot be empty') ,
+body('rating').trim().notEmpty().withMessage('Rating cannot be empty') ,
+body('userFiles').trim().notEmpty().withMessage('Upload Movie Poster') ,
+upload.array('userFiles'), 
+moviesController.movies_create_post);
 
 /* GET Single Movie Info. */
 router.get('/:uuid', moviesController.movies_details_get);
@@ -28,9 +35,13 @@ router.get('/:uuid/delete', moviesController.movies_delete_get);
 router.post('/:uuid/delete', moviesController.movies_delete_post);
 
 /* GET edit todo form. */
-router.get('/:uuid/edit', moviesController.todos_edit_get);
+router.get('/:uuid/edit', moviesController.movies_edit_get);
 
 /* POST edit todo. */
-router.post('/:uuid/edit', moviesController.todos_edit_post);
+router.post('/:uuid/edit',
+body('movieTitle').trim().notEmpty().withMessage('Movie Title cannot be empty') ,
+body('year').trim().notEmpty().withMessage('Release cannot be empty') ,
+body('rating').trim().notEmpty().withMessage('Rating cannot be empty') ,
+ moviesController.movies_edit_post);
 
 module.exports = router;

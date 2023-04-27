@@ -8,6 +8,7 @@ var FederatedCredentials = require('../models/FederatedCredentials');
 const jwt = require('jsonwebtoken');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const { body, validationResult } = require('express-validator');
 
 
 const jwtAccessSecret = "This is my JWT access secret, it should be in a .env file!";
@@ -111,7 +112,7 @@ passport.deserializeUser(function (user, done) {
 
 /* GET home page. */
 router.get('/login', function (req, res, next) {
-  res.render('login');
+  res.render('login', {title: 'Login'});
 });
 
 /* POST local login. */
@@ -131,24 +132,35 @@ router.post('/logout', function (req, res, next) {
 
 /* GET signup form. */
 router.get('/signup', function (req, res, next) {
-  res.render('signup');
+  res.render('signup', {title: 'signup'});
 });
 
 /* POST Signup form. */
-router.post('/signup', async function (req, res, next) {
-  try {
-    let newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    });
-    let savedDoc = await newUser.save();
-    req.login(savedDoc, function (err) {
-      if (err) { return next(err); }
-      return res.redirect('/movies');
-    });
-  } catch (error) {
-    return next(error);
+router.post('/signup',
+body('email').isEmail().normalizeEmail().withMessage('Invalid Email Address'),
+body('password').isLength({
+    min: 6
+}).withMessage('Password doesnt meet requirements'),
+body('name').trim().notEmpty().withMessage('Name cannot be empty') ,
+ async function (req, res, next) {
+  const result = validationResult(req)
+  if(!result.isEmpty()){
+    res.render('signup', {title: 'signup', msg : result.array()});
+  } else{
+    try {
+      let newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+      });
+      let savedDoc = await newUser.save();
+      req.login(savedDoc, function (err) {
+        if (err) { return next(err); }
+        return res.redirect('/movies');
+      });
+    } catch (error) {
+      return next(error);
+    }
   }
 });
 

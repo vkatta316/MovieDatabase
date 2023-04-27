@@ -16,8 +16,10 @@ block content
   header(id="list-header")
     h1= title
   hr
-  if msg 
-    p(class='redtext')= msg
+  if msg
+    ul 
+      each val in msg 
+        li(class="redText")= val.msg
   div(class='wrapper wrapper--w780')
     div(class='card card-3')
       .card-heading 

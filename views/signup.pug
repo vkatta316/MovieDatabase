@@ -2,6 +2,10 @@ extends layout
 
 block content
   .form-signin
+  if msg
+    ul 
+      each val in msg 
+        li(class="redText")= val.msg
   form(action="/signup", method="POST")
     .form-group  
       h2 Please Sign Up

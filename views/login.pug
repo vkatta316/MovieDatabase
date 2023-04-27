@@ -1,6 +1,10 @@
 extends layout
 
 block content
+  if msg
+    ul 
+      each val in msg 
+        li(class="redText")= val.msg
   .form-signin 
   form(action="/login/password", method="POST")
     .form-group  

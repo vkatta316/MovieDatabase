@@ -17,7 +17,9 @@ block content
     h1 Add a Movie 
   hr
   if msg
-    p(class='redText')= msg
+    ul 
+      each val in msg 
+        li(class="redText")= val.msg
   div(class='wrapper wrapper--w780')
     div(class='card card-3')
       .card-heading 

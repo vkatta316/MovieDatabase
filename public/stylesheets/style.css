@@ -175,7 +175,7 @@ div {
 }
 
 .overview {
-  background-color: #1b1c26;
+  background-color: #000000;
   padding: 2rem;
   position: absolute;
   max-height: 100%;
@@ -183,7 +183,7 @@ div {
   left: 0;
   bottom: 0;
   right: 0;
-  transform: translateY(101%);
+  transform: translateY(100%);
   transition: transform 0.3s ease-in;
 }
 
