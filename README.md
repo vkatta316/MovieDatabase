@@ -6,6 +6,8 @@ Email: vkatta@hawk.iit.edu
 
 Git Repository URL: https://github.com/vkatta316/MovieDatabase.git
 
+Railway Deployed URL: moviedatabase-production.up.railway.app
+
 Project Description The objective of movie database/website is to help users find basic viewing basic information about movies such as synopsis, release year, ratings etc. In this website, user who has admin and editor roles can create, edit and delete movies whereas other users can access the information related to all availble movies.
 
 Development Environment: NodeJS and Express JS
@@ -25,6 +27,8 @@ Copy the attached .env file to the folder
 On terminal Use npm run dev to start the application
 
 Open http://localhost:3000/ on browser
+
+Please login with admin credentials provided in the submission text (admin@vmdb.com/admin) to perform all operations. Sign In or Sign Up to browse through application
 
 <img width="1792" alt="signin" src="https://user-images.githubusercontent.com/113000548/234838865-e6805dfe-8ed1-4e7f-9975-e9f6a487a9d6.png">
 
